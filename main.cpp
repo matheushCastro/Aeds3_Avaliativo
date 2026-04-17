@@ -1,65 +1,74 @@
 #include <iostream>
 using namespace std;
-
-void insertionSort(int v[], int n) {
+/*Matheus Henrique, Marcos Roberto ,Plinio Henrique*/
+void ordenarInsercao(int vetor[], int tamanho) {
     int i = 0;
 
-    while (i < n) {
+    while (i < tamanho) {
 
-        if (i == n - 1) {
-            int chave = v[i];
+        if (i == tamanho - 1) {
+            int valorAtual = vetor[i];
             int j = i - 1;
 
-            while (j >= 0 && v[j] > chave) {
-                v[j + 1] = v[j];
+            while (j >= 0 && vetor[j] > valorAtual) {
+                vetor[j + 1] = vetor[j];
                 j--;
             }
-            v[j + 1] = chave;
+
+            vetor[j + 1] = valorAtual;
             break;
         }
 
-        int a = v[i];
-        int b = v[i + 1];
+        
+        int primeiro = vetor[i];
+        int segundo = vetor[i + 1];
 
-        cout << "Par analisado: " << a << " e " << b << endl;
+        cout << "Par analisado: " << primeiro << " e " << segundo << endl;
 
-        // Garantir ordem: a <= b
-        if (a > b) {
-            int temp = a;
-            a = b;
-            b = temp;
+        
+        int menor, maior;
+
+        if (primeiro <= segundo) {
+            menor = primeiro;
+            maior = segundo;
+        } else {
+            menor = segundo;
+            maior = primeiro;
         }
 
-        // 🔹 Inserir primeiro o MENOR (a)
         int j = i - 1;
-        while (j >= 0 && v[j] > a) {
-            v[j + 1] = v[j];
+        while (j >= 0 && vetor[j] > menor) {
+            vetor[j + 1] = vetor[j];
             j--;
         }
-        v[j + 1] = a;
+        vetor[j + 1] = menor;
 
-
-        j = i; // começa depois do a inserido
-        while (j >= 0 && v[j] > b) {
-            v[j + 1] = v[j];
+        
+        j = i;
+        while (j >= 0 && vetor[j] > maior) {
+            vetor[j + 1] = vetor[j];
             j--;
         }
-        v[j + 1] = b;
+        vetor[j + 1] = maior;
 
         i += 2;
     }
 }
 
 int main() {
-    int v[] = {7, 2, 5, 4, 9, 1};
-    int n = sizeof(v) / sizeof(v[0]);
+    int vetor[] = {7, 2, 5, 4, 9, 1,2};
 
-    insertionSort(v, n);
+    int tamanho = sizeof(vetor) / sizeof(vetor[0]);
+
+    ordenarInsercao(vetor, tamanho);
 
     cout << "Vetor ordenado: ";
-    for (int i = 0; i < n; i++) {
-        cout << v[i] << " ";
+
+    for (int i = 0; i < tamanho; i++) {
+        cout << vetor[i] << " ";
     }
+
+    cout << endl;
 
     return 0;
 }
