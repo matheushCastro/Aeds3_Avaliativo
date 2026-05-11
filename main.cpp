@@ -1,74 +1,40 @@
 #include <iostream>
+#include <cmath>
+
 using namespace std;
-/*Matheus Henrique, Marcos Roberto ,Plinio Henrique*/
-void ordenarInsercao(int vetor[], int tamanho) {
-    int i = 0;
 
-    while (i < tamanho) {
-
-        if (i == tamanho - 1) {
-            int valorAtual = vetor[i];
-            int j = i - 1;
-
-            while (j >= 0 && vetor[j] > valorAtual) {
-                vetor[j + 1] = vetor[j];
-                j--;
-            }
-
-            vetor[j + 1] = valorAtual;
-            break;
-        }
-
-        
-        int primeiro = vetor[i];
-        int segundo = vetor[i + 1];
-
-        cout << "Par analisado: " << primeiro << " e " << segundo << endl;
-
-        
-        int menor, maior;
-
-        if (primeiro <= segundo) {
-            menor = primeiro;
-            maior = segundo;
-        } else {
-            menor = segundo;
-            maior = primeiro;
-        }
-
-        int j = i - 1;
-        while (j >= 0 && vetor[j] > menor) {
-            vetor[j + 1] = vetor[j];
-            j--;
-        }
-        vetor[j + 1] = menor;
-
-        
-        j = i;
-        while (j >= 0 && vetor[j] > maior) {
-            vetor[j + 1] = vetor[j];
-            j--;
-        }
-        vetor[j + 1] = maior;
-
-        i += 2;
-    }
+double calcularFuncao(double x) {
+    double resultado = x*x*x - x - 2;
+    return resultado;
 }
 
-int main() {
-    int vetor[] = {7, 2, 5, 4, 9, 1,2};
 
-    int tamanho = sizeof(vetor) / sizeof(vetor[0]);
+double encontrarRaiz(double menor, double maior){
+       double  meio= (menor+ maior)/2;
+       if (abs(calcularFuncao(meio)) < 0.001) {
+           return meio;
+       } else   if (  calcularFuncao( meio) * calcularFuncao(menor) < 0){
+         return    encontrarRaiz(menor, meio);
+       }else{
+       return encontrarRaiz(meio, maior);
+           
+       }
+    
+}
+ 
+int main(int argc, char** argv) {
+    double menor =-20;
+    double maior=20;
+    
+    if (menor > maior) {
 
-    ordenarInsercao(vetor, tamanho);
-
-    cout << "Vetor ordenado: ";
-
-    for (int i = 0; i < tamanho; i++) {
-        cout << vetor[i] << " ";
+        cout << "Intervalo invalido! Impossivel calcular Raiz" << endl;
+        return 0;
     }
 
-    cout << endl;
-
+    double raizEncontrada= encontrarRaiz(menor, maior);
+    cout<< "Funcao da Raiz:"<< raizEncontrada;
+ 
     return 0;
 }
+
